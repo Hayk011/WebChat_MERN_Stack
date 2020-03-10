@@ -1,0 +1,29 @@
+{
+  "name": "webchat_mern_stack",
+  "version": "1.0.0",
+  "description": "Mongoose Express React Node Application ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hayk011/WebChat_MERN_Stack.git"
+  },
+  "author": "Hayk Sargsyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hayk011/WebChat_MERN_Stack/issues"
+  },
+  "homepage": "https://github.com/Hayk011/WebChat_MERN_Stack#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.3",
+    "@types/node": "^13.9.0",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
