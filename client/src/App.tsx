@@ -11,7 +11,7 @@ interface IProps {
 function App(props: IProps) {
     return (
         <>
-            <Nav/>
+            {/*<Nav/>*/}
             {props.children}
         </>
     );
