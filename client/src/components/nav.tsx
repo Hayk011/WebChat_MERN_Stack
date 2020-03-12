@@ -1,7 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 
-const Nav = () => {
+const Nav = (): JSX.Element => {
     return (
         <nav>
             <div className="nav-wrapper blue home-wrapper">
