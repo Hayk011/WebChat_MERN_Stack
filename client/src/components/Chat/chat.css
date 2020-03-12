@@ -1,0 +1,19 @@
+.room-container {
+    max-width: 500px;
+    border: 1px solid;
+    height: 500px;
+    position: relative;
+}
+
+.message-input {
+    position: absolute;
+    bottom: -10px;
+    border: 1px solid;
+}
+.send{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20%;
+    height: 45px;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Home from "./components/home";
-import Chat from "./components/chat";
+import Join from "./components/Join/join";
+import Chat from "./components/Chat/chat";
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import './index.css';
@@ -12,7 +12,7 @@ ReactDOM.render(
         <App>
             <Switch>
                 <Route path="/chat" component={Chat}/>
-                <Route path="/" component={Home}/>
+                <Route path="/" component={Join}/>
             </Switch>
         </App>
     </BrowserRouter>

@@ -1,5 +1,6 @@
 import React from "react";
 import queryString from "query-string";
+import "./chat.css";
 
 const Chat = ({location}: any) => {
     const [name, setName] = React.useState<any>("");
@@ -15,13 +16,29 @@ const Chat = ({location}: any) => {
         ws.onopen = () => {
             console.log("conection")
         }
+        return () => {
+            ws.onclose = () => {
+                console.log("disconect");
+            }
+        }
     }, [entripoint, location.search]);
-    console.log(name, room)
     return (
         <div className="container">
             <h1>Choose Your Room</h1>
             <div className="room-container">
-                chat
+                <input
+                    style={
+                        {
+                            maxWidth: "80%",
+                            borderTop: "1px solid",
+                            borderRight: "1px solid"
+                        }
+                    }
+                    className="message-input"
+                    type="text"
+                    placeholder="message"
+                />
+                <button style={{height: "45px"}} className="btn primry send">Send</button>
             </div>
         </div>
     )
