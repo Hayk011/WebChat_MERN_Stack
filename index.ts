@@ -1,57 +1,42 @@
-// import express from "express";
-// import * as http from "http";
-import WebSocket from "ws";
+import express from "express";
+import http from "http";
+import {Socket} from "socket.io";
+import HomePage from "./router"
+import {addUser, getUser, remuveUser, getUserRoom} from "./helper";
 
-// import router from './router';
+const socketio = require("socket.io");
 
-// const app = express();
-// const server = http.createServer(app);
-const wsServer = new WebSocket.Server({port: 8080})
-// app.use("/", router);
+const PORT = process.env.PORT || 5000
 
+const app = express();
+const server = http.createServer(app);
+app.use(HomePage)
+const io = socketio(server);
 
-wsServer.on("connection", (ws: WebSocket) => {
-    console.log("We have a new conection")
-    ws.on("message", (message: WebSocket) => {
-        console.log("we hav a now conection")
-        wsServer.clients.forEach((client: WebSocket) => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(message);
-            }
-        })
+io.on("connection", (socket: Socket) => {
+    socket.on("join", ({name, room}, errorHandler) => {
+        const {error, user} = addUser(socket.id, name, room);
+        if (error) {
+            errorHandler(error)
+        } else {
+            socket.emit("message", {user: "Admin", text: `${user.name} join in chat room ${user.room}`});
+            socket.broadcast.to(user.room).emit("message", {user: "Admin", text: "join"});
+            socket.join(user.room);
+            errorHandler();
+        }
+        socket.on("sned", (message: Socket, collback: () => void) => {
+            console.log(message)
+            const user = getUser(socket.id);
+            io.to(user.room).emit("message", {user: user.name, text: message});
+            collback();
+
+        });
+    });
+    socket.on("disconnect", () => {
+        console.log("User had leaft");
     })
 });
 
-
-// const PORT: string | number = process.env.PORT || 8080
-// app.listen(PORT, () => {
-//     console.log(`server has been started in port  ${PORT}`);
-// });
-
-
-// const app: Application = express();
-// const PORT: string | number = process.env.PORT || 8080;
-//
-// app.listen(PORT, () => {
-//     console.log(`server started in port  ${PORT}`);
-// });
-
-
-// const server = new WebSocket.Server({port: 8080});
-// server.on("connection", (ws: WebSocket) => {
-//     console.log("we have new conection")
-//     ws.on("message", (message: string) => {
-//         let checkMesage = JSON.parse(message);
-//         if (checkMesage.message == "exit") {
-//             ws.send("user leave chat");
-//             ws.close();
-//         } else {
-//             server.clients.forEach((client: WebSocket) => {
-//                 if (client.readyState === WebSocket.OPEN) {
-//                     client.send(message);
-//                 }
-//             });
-//         }
-//     });
-//})
-;
+server.listen(PORT, () => {
+    console.log(`Server has stating on port ${PORT}`)
+});
